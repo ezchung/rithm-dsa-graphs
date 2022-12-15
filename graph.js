@@ -58,21 +58,21 @@ class Graph {
   /** traverse graph with DFS and returns array of Node values */
   depthFirstSearch(start) {
     //regular
-    // let toVisitStack = [start]; //Current stack
-    // let seen = new Set(toVisitStack); //Check if already seen
-    // let output = [];  //add each value that was placed on stack
+    let toVisitStack = [start]; //Current stack
+    let seen = new Set(toVisitStack); //Check if already seen
+    let output = [];  //add each value that was placed on stack
 
-    // while(toVisitStack.length > 0){
-    //   let current = toVisitStack.pop();
-    //   output.push(current.value)
-    //   for(let adjacent of current.adjacent){
-    //     if(!seen.has(adjacent)){
-    //       toVisitStack.push(adjacent);
-    //       seen.add(adjacent);
-    //     }
-    //   }
-    // }
-    // return output;
+    while(toVisitStack.length > 0){
+      let current = toVisitStack.pop();
+      output.push(current.value)
+      for(let adjacent of current.adjacent){
+        if(!seen.has(adjacent)){
+          toVisitStack.push(adjacent);
+          seen.add(adjacent);
+        }
+      }
+    }
+    return output;
 
     //recursive
     // return dfs(start, [], new Set());
@@ -178,7 +178,26 @@ class Graph {
       // sort
       // nlogn
       queue.sort((a, b) => a[1] - b[1]);
-    }
+    } //TODO: without having to use sort. RN changing the queue
+
+    // if(!this.nodes.has(end)) return;
+    // const result = distanceSPath(start, end, new Set());
+    // console.log(result)
+    // return result;
+ 
+    // function distanceSPath(start, end, seen){
+    //   if(start === end) return 0;
+    //   let shortest = Infinity;
+    //   debugger;
+    //   for(let adjacent of start.adjacent){
+    //     if(!seen.has(adjacent)){
+    //       seen.add(adjacent);
+    //       shortest = Math.min(shortest, ( 1 + distanceSPath(adjacent, end, seen)));
+    //       seen.delete(adjacent);
+    //     }
+    //   }
+    //   return shortest
+    // } //TODO: rn doing more than needed. Going down each level. with bfs method may be better. This is more DFS
   }
 }
 
