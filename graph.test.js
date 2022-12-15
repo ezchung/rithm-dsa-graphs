@@ -200,7 +200,8 @@ describe("DFS", function () {
       } else {
         expect(result[3] === "X" || result[3] === "W").toBe(true);
       }
-    } else if (result[1] === "W") {
+    } 
+    else if (result[1] === "W") {
       expect(result[2] === "Y" || result[2] === "V").toBe(true);
       if (result[2] === "Y") {
         expect(result[3] === "X" || result[3] === "R").toBe(true);

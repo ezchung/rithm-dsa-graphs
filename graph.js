@@ -16,26 +16,67 @@ class Graph {
   }
 
   /** add Node instance and add it to nodes property on graph. */
-  addVertex(vertex) { }
+  addVertex(vertex) { 
+    this.nodes.add(vertex);
+  }
 
   /** add array of new Node instances and adds to them to nodes property. */
-  addVertices(vertexArray) { }
+  addVertices(vertexArray) {
+    // for(let vertex of vertexArray){
+    //   this.nodes.add(vertex)
+    // }
+
+    for(let vertex of vertexArray){
+      this.addVertex(vertex)
+    }
+  }
 
   /** add edge between vertices v1,v2 */
-  addEdge(v1, v2) { }
+  addEdge(v1, v2) { 
+    v1.adjacent.add(v2);
+    v2.adjacent.add(v1);
+  }
 
   /** remove edge between vertices v1,v2 */
-  removeEdge(v1, v2) { }
+  removeEdge(v1, v2) { 
+    v1.adjacent.delete(v2);
+    v2.adjacent.delete(v1);
+  }
 
   /** remove vertex from graph:
    *
    * - remove it from nodes property of graph
    * - update any adjacency lists using that vertex
    */
-  removeVertex(vertex) { }
+  removeVertex(vertex) { 
+    for(let adjacent of vertex.adjacent){
+      this.removeEdge(adjacent, vertex);
+    }
+    this.nodes.delete(vertex);
+  }
 
   /** traverse graph with DFS and returns array of Node values */
-  depthFirstSearch(start) { }
+  depthFirstSearch(start) { 
+    //regular
+    let toVisitStack = [start]; //Current stack
+    let seen = new Set(toVisitStack); //Check if already seen
+    let output = [];  //add each value that was placed on stack
+
+    while(toVisitStack.length > 0){
+      let current = toVisitStack.pop();
+      output.push(current.value)
+      for(let adjacent of current.adjacent){
+        if(!seen.has(adjacent)){
+          toVisitStack.push(adjacent);
+          seen.add(adjacent);
+        }
+      }
+    }
+
+    return output;
+
+    //recursive 
+  }
 
   /** traverse graph with BDS and returns array of Node values */
   breadthFirstSearch(start) { }
