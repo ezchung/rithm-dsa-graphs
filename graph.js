@@ -57,37 +57,24 @@ class Graph {
 
   /** traverse graph with DFS and returns array of Node values */
   depthFirstSearch(start) {
-    //regular
-    let toVisitStack = [start]; //Current stack
-    let seen = new Set(toVisitStack); //Check if already seen
-    let output = [];  //add each value that was placed on stack
+    //iterative
+    // let toVisitStack = [start]; //Current stack
+    // let seen = new Set(toVisitStack); //Check if already seen
+    // let output = [];  //add each value that was placed on stack
 
-    while(toVisitStack.length > 0){
-      let current = toVisitStack.pop();
-      output.push(current.value)
-      for(let adjacent of current.adjacent){
-        if(!seen.has(adjacent)){
-          toVisitStack.push(adjacent);
-          seen.add(adjacent);
-        }
-      }
-    }
-    return output;
-
-    //recursive
-    // return dfs(start, [], new Set());
-
-    // function dfs(start, output, seen) {
-    //   seen.add(start);
-    //   output.push(start.value);
-    //   for (const adjacent of start.adjacent) {
-    //     if (!seen.has(adjacent)) {
-    //       dfs(adjacent, output, seen);
+    // while(toVisitStack.length > 0){
+    //   let current = toVisitStack.pop();
+    //   output.push(current.value)
+    //   for(let adjacent of current.adjacent){
+    //     if(!seen.has(adjacent)){
+    //       toVisitStack.push(adjacent);
+    //       seen.add(adjacent);
     //     }
     //   }
-    //   return output;
     // }
+    // return output;
 
+    //recursive
     const result = dfs(start, [], new Set());
     return result;
 
@@ -104,6 +91,20 @@ class Graph {
       }
       return output;
     }
+
+    // return dfs(start, [], new Set());
+
+    // function dfs(start, output, seen) {
+    //   seen.add(start);
+    //   output.push(start.value);
+    //   for (const adjacent of start.adjacent) {
+    //     if (!seen.has(adjacent)) {
+    //       dfs(adjacent, output, seen);
+    //     }
+    //   }
+    //   return output;
+    // }
+
 
     // function dfs2(start, output) {
     //   if (start.visited === true) {
@@ -153,7 +154,7 @@ class Graph {
     }
 
     /**
-     *
+     * 
      *
      */
 
@@ -164,40 +165,42 @@ class Graph {
   distanceOfShortestPath(start, end) {
     // use min heap!!
     // logn
-    const queue = [[start, 0]];
-    const seen = new Set();
-    while (queue.length > 0) {
-      const [node, distance] = queue.shift();
-      seen.add(node);
-      if (node === end) return distance;
-      for (const adjacent of node.adjacent) {
-        if (!seen.has(adjacent)) {
-          queue.push([adjacent, distance + 1]);
-        }
-      }
-      // sort
-      // nlogn
-      queue.sort((a, b) => a[1] - b[1]);
-    } //TODO: without having to use sort. RN changing the queue
-
-    // if(!this.nodes.has(end)) return;
-    // const result = distanceSPath(start, end, new Set());
-    // console.log(result)
-    // return result;
- 
-    // function distanceSPath(start, end, seen){
-    //   if(start === end) return 0;
-    //   let shortest = Infinity;
-    //   debugger;
-    //   for(let adjacent of start.adjacent){
-    //     if(!seen.has(adjacent)){
-    //       seen.add(adjacent);
-    //       shortest = Math.min(shortest, ( 1 + distanceSPath(adjacent, end, seen)));
-    //       seen.delete(adjacent);
+    //iterative 
+    // const queue = [[start, 0]];
+    // const seen = new Set();
+    // let shortestDistance = Infinity;
+    // while (queue.length > 0) {
+    //   const [node, distance] = queue.shift();
+    //   seen.add(node);
+    //   if (node === end) shortestDistance = Math.min(shortestDistance, distance);
+    //   for (const adjacent of node.adjacent) {
+    //     if (!seen.has(adjacent)) {
+    //       queue.push([adjacent, distance + 1]);
     //     }
     //   }
-    //   return shortest
-    // } //TODO: rn doing more than needed. Going down each level. with bfs method may be better. This is more DFS
+    // }
+    // return shortestDistance === Infinity 
+    //         ? undefined
+    //         : shortestDistance;
+
+    if(!this.nodes.has(end)) return;
+    const result = distanceSPath(start, end, new Set());
+    console.log(result)
+    return result;
+ 
+    function distanceSPath(start, end, seen){
+      if(start === end) return 0;
+      let shortest = Infinity;
+      debugger;
+      for(let adjacent of start.adjacent){
+        if(!seen.has(adjacent)){
+          seen.add(adjacent);
+          shortest = Math.min(shortest, ( 1 + distanceSPath(adjacent, end, seen)));
+          seen.delete(adjacent);
+        }
+      }
+      return shortest
+    } 
   }
 }
 
